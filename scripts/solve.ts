@@ -14,9 +14,13 @@ if (!isBetween(day, [1, 25])) {
 
 await scaffold(day, year)
 
+const useExample = argv.includes('--example')
+
 const name = `${day}`.padStart(2, '0')
 
-const { default: input } = await import(`@/${name}/input.txt`)
+const { default: input } = await import(
+  `@/${name}/${useExample ? 'example' : 'input'}.txt`
+)
 const { partOne, partTwo, parse } = await import(`@/${name}/${name}.ts`)
 
 const [one, onePerformance] = withPerformance(() => partOne?.(parse(input)))
